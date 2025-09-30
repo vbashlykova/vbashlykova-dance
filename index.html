@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ВАЛЕРИЯ БАШЛЫКОВА</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0d0d0d;
+            color: #fff;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        .cursor {
+            width: 8px;
+            height: 8px;
+            background: #ff1744;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: difference;
+            transition: transform 0.2s ease;
+        }
+
+        .cursor-follower {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 23, 68, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.15s ease-out;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            mix-blend-mode: difference;
+        }
+
+        .logo {
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 4px;
+            color: #fff;
+        }
+
+        nav {
+            display: flex;
+            gap: 3rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            font-weight: 300;
+            position: relative;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .hero-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.15;
+            filter: grayscale(1) contrast(1.5);
+        }
+
+        .hero-number {
+            position: absolute;
+            top: 50%;
+            right: 10%;
+            transform: translateY(-50%);
+            font-size: 18rem;
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 23, 68, 0.2);
+            line-height: 0.8;
+            z-index: 0;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-subtitle {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: #ff1744;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .hero h1 {
+            font-size: 7rem;
+            font-weight: 900;
+            line-height: 0.9;
+            margin-bottom: 3rem;
+            letter-spacing: -3px;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #999;
+            font-weight: 300;
+            max-width: 500px;
+            margin-bottom: 4rem;
+        }
+
+        .cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid #333;
+            transition: border-color 0.3s;
+        }
+
+        .cta-link:hover {
+            border-color: #ff1744;
+        }
+
+        .cta-arrow {
+            width: 40px;
+            height: 1px;
+            background: #ff1744;
+            position: relative;
+            transition: width 0.3s;
+        }
+
+        .cta-link:hover .cta-arrow {
+            width: 60px;
+        }
+
+        .cta-arrow::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -3px;
+            width: 8px;
+            height: 8px;
+            border-right: 1px solid #ff1744;
+            border-top: 1px solid #ff1744;
+            transform: rotate(45deg);
+        }
+
+        .section {
+            min-height: 100vh;
+            padding: 8rem 4rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .section-number {
+            position: absolute;
+            left: 4rem;
+            top: 8rem;
+            font-size: 0.75rem;
+            color: #666;
+            letter-spacing: 2px;
+        }
+
+        .classes-wrapper {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: #ff1744;
+            margin-bottom: 4rem;
+            padding-left: 8rem;
+        }
+
+        .classes-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .news-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .news-item {
+            padding: 4rem 0;
+            border-bottom: 1px solid #1a1a1a;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .news-date {
+            font-size: 0.7rem;
+            color: #666;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .news-item h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+            color: #fff;
+        }
+
+        .news-item p {
+            color: #888;
+            line-height: 1.8;
+            font-weight: 300;
+            font-size: 1rem;
+        }
+
+        .loading-text {
+            color: #666;
+            text-align: center;
+            padding: 4rem 0;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .error-text {
+            color: #ff1744;
+            text-align: center;
+            padding: 4rem 0;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .class-item {
+            padding: 4rem;
+            border: 1px solid #1a1a1a;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #0d0d0d;
+        }
+
+        .class-item:hover {
+            background: #111;
+            border-color: #ff1744;
+            z-index: 2;
+        }
+
+        .class-item h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: -1px;
+        }
+
+        .class-item p {
+            color: #888;
+            line-height: 1.8;
+            font-weight: 300;
+            max-width: 400px;
+        }
+
+        .class-number {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 0.7rem;
+            color: #333;
+            letter-spacing: 2px;
+        }
+
+        .about-section {
+            background: #111;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: 100vh;
+        }
+
+        .about-image {
+            position: relative;
+            overflow: hidden;
+            background: #0d0d0d;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff1744 0%, transparent 100%);
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12rem;
+            opacity: 0.3;
+        }
+
+        .about-content {
+            padding: 8rem 6rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .about-label {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: #ff1744;
+            margin-bottom: 3rem;
+        }
+
+        .about-content h2 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 3rem;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        .about-text {
+            color: #888;
+            line-height: 2;
+            font-weight: 300;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #ff1744;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: #666;
+            letter-spacing: 2px;
+        }
+
+        .contact-section {
+            background: #0d0d0d;
+            padding: 12rem 4rem;
+            text-align: center;
+        }
+
+        .contact-title {
+            font-size: 6rem;
+            font-weight: 900;
+            margin-bottom: 4rem;
+            letter-spacing: -3px;
+        }
+
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 6rem;
+            margin-bottom: 6rem;
+        }
+
+        .contact-item {
+            text-align: left;
+        }
+
+        .contact-label {
+            font-size: 0.7rem;
+            color: #666;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .contact-value {
+            font-size: 1.2rem;
+            color: #fff;
+            font-weight: 300;
+        }
+
+        footer {
+            background: #000;
+            padding: 3rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        .footer-text {
+            font-size: 0.7rem;
+            color: #666;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 1024px) {
+            header {
+                padding: 1.5rem 2rem;
+            }
+
+            nav {
+                gap: 2rem;
+            }
+
+            nav a {
+                font-size: 0.7rem;
+            }
+
+            .hero {
+                padding: 0 2rem;
+                height: 100vh;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+                letter-spacing: -2px;
+            }
+
+            .hero-number {
+                font-size: 8rem;
+                right: 5%;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+                margin-bottom: 3rem;
+            }
+
+            .section {
+                padding: 6rem 2rem;
+                min-height: auto;
+            }
+
+            .section-number {
+                left: 2rem;
+                top: 6rem;
+            }
+
+            .section-title {
+                padding-left: 0;
+                margin-bottom: 3rem;
+            }
+
+            .classes-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .class-item {
+                padding: 3rem 2rem;
+            }
+
+            .class-item h3 {
+                font-size: 2rem;
+            }
+
+            .about-section {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .about-image {
+                height: 50vh;
+                min-height: 400px;
+            }
+
+            .about-content {
+                padding: 4rem 2rem;
+            }
+
+            .about-content h2 {
+                font-size: 2.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .stats {
+                gap: 2rem;
+                flex-wrap: wrap;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+
+            .news-item {
+                padding: 3rem 0;
+            }
+
+            .news-item h3 {
+                font-size: 1.8rem;
+            }
+
+            .news-item p {
+                font-size: 0.9rem;
+            }
+
+            .contact-section {
+                padding: 6rem 2rem;
+            }
+
+            .contact-title {
+                font-size: 3rem;
+                margin-bottom: 3rem;
+            }
+
+            .contact-grid {
+                flex-direction: column;
+                gap: 3rem;
+                align-items: center;
+            }
+
+            footer {
+                padding: 2rem;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .logo {
+                font-size: 0.7rem;
+                letter-spacing: 2px;
+            }
+
+            nav {
+                gap: 1.5rem;
+            }
+
+            nav a {
+                font-size: 0.6rem;
+                letter-spacing: 1px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+                letter-spacing: -1px;
+            }
+
+            .hero-number {
+                font-size: 6rem;
+                opacity: 0.5;
+            }
+
+            .hero-subtitle {
+                font-size: 0.65rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-description {
+                font-size: 0.9rem;
+                max-width: 100%;
+            }
+
+            .cta-link {
+                font-size: 0.7rem;
+            }
+
+            .section-title {
+                font-size: 0.65rem;
+                margin-bottom: 2rem;
+            }
+
+            .class-item {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .class-item h3 {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .class-item p {
+                font-size: 0.9rem;
+                line-height: 1.6;
+            }
+
+            .class-number {
+                font-size: 0.65rem;
+                top: 1.5rem;
+                right: 1.5rem;
+            }
+
+            .about-image {
+                height: 40vh;
+                min-height: 300px;
+            }
+
+            .image-placeholder {
+                font-size: 8rem;
+            }
+
+            .about-content {
+                padding: 3rem 1.5rem;
+            }
+
+            .about-label {
+                font-size: 0.65rem;
+                margin-bottom: 2rem;
+            }
+
+            .about-content h2 {
+                font-size: 2rem;
+                letter-spacing: -1px;
+            }
+
+            .about-text {
+                font-size: 0.9rem;
+                line-height: 1.8;
+            }
+
+            .stats {
+                margin-top: 3rem;
+                gap: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .stat-label {
+                font-size: 0.65rem;
+            }
+
+            .contact-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .contact-title {
+                font-size: 2.2rem;
+                letter-spacing: -2px;
+                margin-bottom: 2rem;
+            }
+
+            .contact-grid {
+                gap: 2.5rem;
+            }
+
+            .contact-label {
+                font-size: 0.65rem;
+            }
+
+            .contact-value {
+                font-size: 1rem;
+            }
+
+            .section-number {
+                font-size: 0.65rem;
+                left: 1.5rem;
+                top: 4rem;
+            }
+
+            .footer-text {
+                font-size: 0.65rem;
+            }
+
+            .cursor,
+            .cursor-follower {
+                display: none;
+            }
+
+            body {
+                cursor: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <header>
+        <div class="logo">ВАЛЕРИЯ БАШЛЫКОВА</div>
+        <nav>
+            <a href="#about">ИСТОРИЯ</a>
+            <a href="#classes">КЛАССЫ</a>
+            <a href="#contact">КОНТАКТ</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg">
+            <video autoplay muted loop playsinline>
+                <source src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect fill='%23ff1744' width='100' height='100'/%3E%3C/svg%3E" type="video/mp4">
+            </video>
+        </div>
+        <div class="hero-number">01</div>
+        <div class="hero-content">
+            <div class="hero-subtitle">ХОРЕОГРАФ / ВОРОНЕЖ</div>
+            <h1>ТАНЕЦ —<br>ЭТО<br>СВОБОДА</h1>
+            <p class="hero-description">3 года опыта в создании уникальных хореографических постановок. Мой подход — сочетание техники, эмоции и индивидуальности каждого танцора.</p>
+            <a href="#classes" class="cta-link">
+                ИССЛЕДОВАТЬ КЛАССЫ
+                <span class="cta-arrow"></span>
+            </a>
+        </div>
+    </section>
+
+ <section class="section">
+        <div class="section-number">02 — НАПРАВЛЕНИЯ</div>
+        <div class="classes-wrapper">
+            <div class="section-title">ЧТО Я ПРЕПОДАЮ</div>
+            <div class="classes-layout">
+                <div class="class-item">
+                    <span class="class-number">01</span>
+                    <h3>Реггетон</h3>
+                    <p>Чувственный и энергичный латиноамериканский стиль, сочетающий африканские ритмы, хип-хоп и латинские танцы. Работаем с изоляцией, пластикой бёдер и характерной подачей. Идеально для раскрепощения и уверенности в своём теле.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="about" class="about-section">
+        <div class="about-image">
+            <div class="image-placeholder">✦</div>
+        </div>
+        <div class="about-content">
+            <div class="about-label">03 — МОЯ ИСТОРИЯ</div>
+            <h2>Путь через движение</h2>
+            <p class="about-text">Начала с кружка танцев в 6 лет. В 16 открыла для себя полноценные занятия, спустя пару лет занятий, я поняла, что танец может быть не только красивым, но и честным. </p>
+            <p class="about-text">Создавала хореографию для музыкальных клипов.</p>
+            <p class="about-text">Сейчас моя миссия — помогать людям найти свой язык через танец, без страха и оценки.</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">ЛЕТ ОПЫТА</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="news" class="section">
+        <div class="section-number">04 — НОВОСТИ</div>
+        <div class="classes-wrapper">
+            <div class="section-title">ЧТО ПРОИСХОДИТ</div>
+            <div id="news-container" class="news-layout">
+                <div class="loading-text">Загрузка новостей...</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="section-number">05 — КОНТАКТ</div>
+        <h2 class="contact-title">Начнём?</h2>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <div class="contact-label">EMAIL</div>
+                <div class="contact-value">хз пока что</div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-label">СТУДИЯ</div>
+                <div class="contact-value">где то в Воронеже, потом напишу</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-text">© 2025 ВАЛЕРИЯ БАШЛЫКОВА</div>
+        <div class="footer-text">СОЗДАНО С ЛЮБОВЬЮ К ДВИЖЕНИЮ</div>
+    </footer>
+
+    <script>
+        // Загрузка новостей из news.json
+        async function loadNews() {
+            const container = document.getElementById('news-container');
+            
+            try {
+                const response = await fetch('news.json');
+                if (!response.ok) throw new Error('Не удалось загрузить новости');
+                
+                const news = await response.json();
+                
+                if (news.length === 0) {
+                    container.innerHTML = '<div class="loading-text">Новостей пока нет</div>';
+                    return;
+                }
+                
+                container.innerHTML = news.map((item, index) => `
+                    <div class="news-item" style="animation-delay: ${index * 0.1}s">
+                        <span class="news-date">${item.date}</span>
+                        <h3>${item.title}</h3>
+                        <p>${item.content}</p>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Ошибка загрузки новостей:', error);
+                container.innerHTML = '<div class="error-text">Не удалось загрузить новости. Кодер заснул.</div>';
+            }
+        }
+
+        // Загружаем новости при загрузке страницы
+        document.addEventListener('DOMContentLoaded', loadNews);
+
+        // Кастомный курсор
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+        
+        let mouseX = 0, mouseY = 0;
+        let followerX = 0, followerY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+
+        function animateFollower() {
+            followerX += (mouseX - followerX) * 0.1;
+            followerY += (mouseY - followerY) * 0.1;
+            follower.style.left = followerX - 20 + 'px';
+            follower.style.top = followerY - 20 + 'px';
+            requestAnimationFrame(animateFollower);
+        }
+        animateFollower();
+
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2)';
+                follower.style.transform = 'scale(1.5)';
+            });
+            link.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                follower.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
