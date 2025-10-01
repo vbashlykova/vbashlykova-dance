@@ -231,27 +231,52 @@
         .classes-layout {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 2rem;
-            max-width: 900px;
+            gap: 0;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         .news-layout {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            max-width: 1000px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         .news-item {
-            padding: 4rem 0;
-            border-bottom: 1px solid #1a1a1a;
+            padding: 3rem;
+            border: 1px solid #1a1a1a;
+            background: linear-gradient(135deg, rgba(255, 23, 68, 0.02) 0%, transparent 100%);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             animation: fadeIn 0.6s ease;
         }
 
+        .news-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: #ff1744;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .news-item:hover::after {
+            width: 100%;
+        }
+
+        .news-item:hover {
+            background: linear-gradient(135deg, rgba(255, 23, 68, 0.05) 0%, transparent 100%);
+            border-color: rgba(255, 23, 68, 0.3);
+            transform: translateY(-5px);
+        }
+
         .news-item:last-child {
-            border-bottom: none;
+            border: 1px solid #1a1a1a;
         }
 
         @keyframes fadeIn {
@@ -266,26 +291,28 @@
         }
 
         .news-date {
-            font-size: 0.7rem;
-            color: #666;
-            letter-spacing: 2px;
+            font-size: 0.65rem;
+            color: #ff1744;
+            letter-spacing: 3px;
             margin-bottom: 1.5rem;
             display: block;
+            font-weight: 500;
         }
 
         .news-item h3 {
-            font-size: 2.2rem;
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: 800;
             margin-bottom: 1.5rem;
             letter-spacing: -1px;
             color: #fff;
+            line-height: 1.3;
         }
 
         .news-item p {
-            color: #888;
-            line-height: 1.8;
+            color: #999;
+            line-height: 1.9;
             font-weight: 300;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .loading-text {
@@ -305,30 +332,68 @@
         }
 
         .class-item {
-            padding: 4rem;
+            padding: 5rem 4rem;
             border: 1px solid #1a1a1a;
             position: relative;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            background: #0d0d0d;
+            background: linear-gradient(135deg, rgba(255, 23, 68, 0.02) 0%, transparent 100%);
+            overflow: hidden;
+        }
+
+        .class-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 0;
+            background: #ff1744;
+            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .class-item:hover::before {
+            height: 100%;
         }
 
         .class-item:hover {
-            background: #111;
-            border-color: #ff1744;
-            z-index: 2;
+            background: linear-gradient(135deg, rgba(255, 23, 68, 0.05) 0%, transparent 100%);
+            border-color: rgba(255, 23, 68, 0.3);
+            transform: translateX(10px);
         }
 
         .class-item h3 {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 3rem;
+            font-weight: 900;
             margin-bottom: 2rem;
-            letter-spacing: -1px;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #fff 0%, #ff1744 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .class-item p {
-            color: #888;
-            line-height: 1.8;
+            color: #999;
+            line-height: 2;
             font-weight: 300;
+            font-size: 1.1rem;
+            max-width: 800px;
+        }
+
+        .class-features {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .feature-tag {
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 23, 68, 0.1);
+            border: 1px solid rgba(255, 23, 68, 0.2);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: #ff1744;
         }
 
         .class-number {
@@ -575,7 +640,20 @@
             }
 
             .class-item h3 {
-                font-size: 2rem;
+                font-size: 2.2rem;
+            }
+
+            .class-item p {
+                font-size: 1rem;
+            }
+
+            .class-features {
+                gap: 1rem;
+            }
+
+            .feature-tag {
+                font-size: 0.65rem;
+                padding: 0.4rem 1rem;
             }
 
             .about-section {
@@ -607,11 +685,15 @@
             }
 
             .news-item {
-                padding: 3rem 0;
+                padding: 2.5rem 2rem;
+            }
+
+            .news-layout {
+                grid-template-columns: 1fr;
             }
 
             .news-item h3 {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
 
             .news-item p {
@@ -695,13 +777,24 @@
             }
 
             .class-item h3 {
-                font-size: 1.8rem;
+                font-size: 2rem;
                 margin-bottom: 1.5rem;
             }
 
             .class-item p {
                 font-size: 0.9rem;
                 line-height: 1.6;
+            }
+
+            .class-features {
+                gap: 0.8rem;
+                margin-top: 1.5rem;
+            }
+
+            .feature-tag {
+                font-size: 0.6rem;
+                padding: 0.4rem 0.8rem;
+                letter-spacing: 1px;
             }
 
             .class-number {
@@ -819,7 +912,7 @@
         <div class="hero-content">
             <div class="hero-subtitle">ХОРЕОГРАФ / ВОРОНЕЖ</div>
             <h1>ТАНЕЦ —<br>ЭТО<br>СВОБОДА</h1>
-            <p class="hero-description">15 лет опыта в создании уникальных хореографических постановок. Мой подход — сочетание техники, эмоции и индивидуальности каждого танцора.</p>
+            <p class="hero-description">5 лет опыта в создании уникальных хореографических постановок. Мой подход — сочетание техники, эмоции и индивидуальности каждого танцора.</p>
             <a href="#classes" class="cta-link">
                 ИССЛЕДОВАТЬ КЛАССЫ
                 <span class="cta-arrow"></span>
@@ -836,6 +929,11 @@
                     <span class="class-number">01</span>
                     <h3>Реггетон</h3>
                     <p>Чувственный и энергичный латиноамериканский стиль, сочетающий африканские ритмы, хип-хоп и латинские танцы. Работаем с изоляцией, пластикой бёдер и характерной подачей. Идеально для раскрепощения и уверенности в своём теле.</p>
+                    <div class="class-features">
+                        <span class="feature-tag">ГРУППОВЫЕ ЗАНЯТИЯ</span>
+                        <span class="feature-tag">ИНДИВИДУАЛЬНО</span>
+                        <span class="feature-tag">ВСЕ УРОВНИ</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -853,7 +951,7 @@
             <p class="about-text">Сейчас моя миссия — помогать людям найти свой язык через танец, без страха и оценки.</p>
             <div class="stats">
                 <div class="stat-item">
-                    <div class="stat-number">15</div>
+                    <div class="stat-number">5</div>
                     <div class="stat-label">ЛЕТ ОПЫТА</div>
                 </div>
             </div>
@@ -876,11 +974,11 @@
         <div class="contact-grid">
             <div class="contact-item">
                 <div class="contact-label">EMAIL</div>
-                <div class="contact-value">Ы</div>
+                <div class="contact-value">хз пока что</div>
             </div>
             <div class="contact-item">
                 <div class="contact-label">СТУДИЯ</div>
-                <div class="contact-value">Воронеж, площадь Ленина 8Б</div>
+                <div class="contact-value">где то в Воронеже, потом напишу</div>
             </div>
         </div>
     </section>
@@ -888,12 +986,12 @@
     <footer>
         <div class="footer-text">© 2025 ВАЛЕРИЯ БАШЛЫКОВА</div>
         <div class="social-links">
-            <a href="https://t.me/vbashlykova" target="_blank" class="social-link" aria-label="Telegram">
+            <a href="https://t.me/yourusername" target="_blank" class="social-link" aria-label="Telegram">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.68c.223-.198-.054-.308-.346-.11l-6.4 4.03-2.76-.918c-.6-.187-.612-.6.125-.89l10.782-4.156c.5-.176.943.11.78.89z"/>
                 </svg>
             </a>
-            <a href="https://instagram.com/vbashlykova" target="_blank" class="social-link" aria-label="Instagram">
+            <a href="https://instagram.com/yourusername" target="_blank" class="social-link" aria-label="Instagram">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                 </svg>
