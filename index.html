@@ -17,6 +17,17 @@
             color: #fff;
             overflow-x: hidden;
             cursor: none;
+            position: relative;
+        }
+
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
         }
 
         .cursor {
@@ -98,7 +109,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 1;
+            opacity: 0.3;
             filter: grayscale(1) contrast(1.5);
         }
 
@@ -215,13 +226,14 @@
             letter-spacing: 3px;
             color: #ff1744;
             margin-bottom: 4rem;
-            padding-left: 8rem;
         }
 
         .classes-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .news-layout {
@@ -317,7 +329,6 @@
             color: #888;
             line-height: 1.8;
             font-weight: 300;
-            max-width: 400px;
         }
 
         .class-number {
@@ -424,6 +435,7 @@
             background: #0d0d0d;
             padding: 12rem 4rem;
             text-align: center;
+            position: relative;
         }
 
         .contact-title {
@@ -464,12 +476,47 @@
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid #1a1a1a;
+            position: relative;
         }
 
         .footer-text {
             font-size: 0.7rem;
             color: #666;
             letter-spacing: 2px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .social-link:hover {
+            border-color: #ff1744;
+            background: rgba(255, 23, 68, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .social-link svg {
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+            transition: fill 0.3s;
+        }
+
+        .social-link:hover svg {
+            fill: #ff1744;
         }
 
         @media (max-width: 1024px) {
@@ -516,7 +563,6 @@
             }
 
             .section-title {
-                padding-left: 0;
                 margin-bottom: 3rem;
             }
 
@@ -592,6 +638,11 @@
                 flex-direction: column;
                 gap: 1rem;
                 text-align: center;
+            }
+
+            .social-links {
+                order: -1;
+                margin-bottom: 1rem;
             }
         }
 
@@ -744,6 +795,7 @@
     </style>
 </head>
 <body>
+    <canvas id="particles-canvas"></canvas>
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
 
@@ -752,6 +804,7 @@
         <nav>
             <a href="#about">ИСТОРИЯ</a>
             <a href="#classes">КЛАССЫ</a>
+            <a href="#news">НОВОСТИ</a>
             <a href="#contact">КОНТАКТ</a>
         </nav>
     </header>
@@ -774,7 +827,7 @@
         </div>
     </section>
 
- <section class="section">
+    <section id="classes" class="section">
         <div class="section-number">02 — НАПРАВЛЕНИЯ</div>
         <div class="classes-wrapper">
             <div class="section-title">ЧТО Я ПРЕПОДАЮ</div>
@@ -788,7 +841,6 @@
         </div>
     </section>
 
-
     <section id="about" class="about-section">
         <div class="about-image">
             <div class="image-placeholder">✦</div>
@@ -796,12 +848,12 @@
         <div class="about-content">
             <div class="about-label">03 — МОЯ ИСТОРИЯ</div>
             <h2>Путь через движение</h2>
-            <p class="about-text">Начала с кружка танцев в 6 лет. В 20 открыла для себя полноценные занятия, спустя пару лет занятий, я поняла, что танец может быть не только красивым, но и честным. </p>
+            <p class="about-text">Начала с кружка танцев в 6 лет. В 20 открыла для себя полноценные занятия, спустя пару лет занятий, я поняла, что танец может быть не только красивым, но и честным.</p>
             <p class="about-text">Создавала хореографию для музыкальных клипов.</p>
             <p class="about-text">Сейчас моя миссия — помогать людям найти свой язык через танец, без страха и оценки.</p>
             <div class="stats">
                 <div class="stat-item">
-                    <div class="stat-number">5</div>
+                    <div class="stat-number">15</div>
                     <div class="stat-label">ЛЕТ ОПЫТА</div>
                 </div>
             </div>
@@ -824,22 +876,117 @@
         <div class="contact-grid">
             <div class="contact-item">
                 <div class="contact-label">EMAIL</div>
-                <div class="contact-value">хз пока что</div>
+                <div class="contact-value">Ы</div>
             </div>
             <div class="contact-item">
                 <div class="contact-label">СТУДИЯ</div>
-                <div class="contact-value">где то в Воронеже, потом напишу</div>
+                <div class="contact-value">Воронеж, площадь Ленина 8Б</div>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="footer-text">© 2025 ВАЛЕРИЯ БАШЛЫКОВА</div>
+        <div class="social-links">
+            <a href="https://t.me/vbashlykova" target="_blank" class="social-link" aria-label="Telegram">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.68c.223-.198-.054-.308-.346-.11l-6.4 4.03-2.76-.918c-.6-.187-.612-.6.125-.89l10.782-4.156c.5-.176.943.11.78.89z"/>
+                </svg>
+            </a>
+            <a href="https://instagram.com/vbashlykova" target="_blank" class="social-link" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+            </a>
+        </div>
         <div class="footer-text">СОЗДАНО С ЛЮБОВЬЮ К ДВИЖЕНИЮ</div>
     </footer>
 
     <script>
-        // Загрузка новостей из news.json
+        // Particles animation
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = 80;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(255, 23, 68, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.strokeStyle = `rgba(255, 23, 68, ${0.15 * (1 - distance / 150)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            connectParticles();
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // News loading
         async function loadNews() {
             const container = document.getElementById('news-container');
             
@@ -868,10 +1015,8 @@
             }
         }
 
-        // Загружаем новости при загрузке страницы
         document.addEventListener('DOMContentLoaded', loadNews);
 
-        // Кастомный курсор
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
         
